@@ -13,11 +13,12 @@ import java.util.ArrayList;
 
 /**
  * Created by chenzhiyong on 16/6/7.
+ * 进入时的揭露动画
  */
 public class ShareElemEnterRevealTransition extends Transition {
     private static final String TAG = "ShareElemEnterRevealTransition";
 
-    private static final String PROPNAME_BACKGROUND = "custom_reveal:change_radius:radius";
+    private static final String PROPNAME_RADIUS = "custom_reveal:change_radius:radius";
 
     private boolean hasAnim = false;
 
@@ -29,7 +30,7 @@ public class ShareElemEnterRevealTransition extends Transition {
 
     @Override
     public void captureStartValues(TransitionValues transitionValues) {
-        transitionValues.values.put(PROPNAME_BACKGROUND, transitionValues.view.getWidth() / 2);
+        transitionValues.values.put(PROPNAME_RADIUS, transitionValues.view.getWidth() / 2);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class ShareElemEnterRevealTransition extends Transition {
         float widthSquared = view.getWidth() * view.getWidth();
         float heightSquared = view.getHeight() * view.getHeight();
         int radius = (int) Math.sqrt(widthSquared + heightSquared) / 2;
-        transitionValues.values.put(PROPNAME_BACKGROUND, radius);
+        transitionValues.values.put(PROPNAME_RADIUS, radius);
     }
 
     @Override
@@ -55,8 +56,8 @@ public class ShareElemEnterRevealTransition extends Transition {
 //        }
 
         final View view = endValues.view;
-        int startRadius = (int) startValues.values.get(PROPNAME_BACKGROUND);
-        int endRadius = (int) endValues.values.get(PROPNAME_BACKGROUND);
+        int startRadius = (int) startValues.values.get(PROPNAME_RADIUS);
+        int endRadius = (int) endValues.values.get(PROPNAME_RADIUS);
 
         if (view == animView) {
             Animator reveal = createAnimator(view, startRadius, endRadius);

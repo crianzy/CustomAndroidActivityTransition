@@ -89,8 +89,6 @@ public class ShareElemReturnChangePosition extends Transition {
 
             Path changePosPath = getPathMotion().getPath(startRect.centerX(), startRect.centerY(), endRect.centerX(), endRect.centerY() - endRect.height() / 2);
 
-            int radius = startRect.centerY() - endRect.centerY();
-
             ObjectAnimator objectAnimator = ObjectAnimator.ofObject(view, new PropPosition(PointF.class, "position", new PointF(startRect.centerX(), startRect.centerY())), null, changePosPath);
             objectAnimator.setInterpolator(new FastOutSlowInInterpolator());
 

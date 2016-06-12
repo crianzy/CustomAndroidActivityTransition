@@ -36,6 +36,7 @@ public class ChangePosition extends Transition {
 
 
     public ChangePosition() {
+        // 这里通过曲线的方式 来改变位置
         setPathMotion(new PathMotion() {
             @Override
             public Path getPath(float startX, float startY, float endX, float endY) {
@@ -45,6 +46,7 @@ public class ChangePosition extends Transition {
                 float controlPointX = (startX + endX) / 3;
                 float controlPointY = (startY + endY) / 2;
 
+                // 这里是一条贝塞尔曲线的路基, (controlPointX, controlPointY) 表示控制点
                 path.quadTo(controlPointX, controlPointY, endX, endY);
                 return path;
             }
@@ -121,6 +123,7 @@ public class ChangePosition extends Transition {
             int transY = y - startY;
             int transX = x - startX;
 
+            // 这里控制 View 移动
             view.setTranslationX(transX);
             view.setTranslationY(transY);
         }
