@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0e0e0e</color>
+    <color name="colorPrimaryDark">#0e0e0e</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="action_bar_black_color">#0e0e0e</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="white_20_alpha">#33ffffff</color>
+    <color name="white_35_alpha">#59ffffff</color>
+    <color name="white_60_alpha">#99ffffff</color>
+    <color name="white_90_alpha">#e6ffffff</color>
+    <color name="black">#000000</color>
+    <color name="black_15_alpha">#26000000</color>
+    <color name="black_35_alpha">#59000000</color>
+    <color name="black_40_alpha">#66000000</color>
+    <color name="black_60_alpha">#99000000</color>
+    <color name="black_75_alpha">#bf000000</color>
+    <color name="black_80_alpha">#cc000000</color>
+    <color name="black_85_alpha">#d9000000</color>
+    <color name="black_90_alpha">#e6000000</color>
+
+</resources>
