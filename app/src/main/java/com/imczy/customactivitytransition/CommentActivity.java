@@ -59,7 +59,7 @@ public class CommentActivity extends AppCompatActivity {
         changePos.setDuration(300);
         changePos.addTarget(R.id.comment_box);
         transitionSet.addTransition(changePos);
-//
+
         Transition revealTransition = new ShareElemEnterRevealTransition(mCommentBox);
         transitionSet.addTransition(revealTransition);
         revealTransition.addTarget(R.id.comment_box);
@@ -72,7 +72,7 @@ public class CommentActivity extends AppCompatActivity {
 
         transitionSet.addTransition(changeColor);
 
-//        transitionSet.setDuration(300);
+        transitionSet.setDuration(900);
 
         return transitionSet;
     }
@@ -97,7 +97,7 @@ public class CommentActivity extends AppCompatActivity {
         revealTransition.addTarget(R.id.comment_box);
         transitionSet.addTransition(revealTransition);
 
-        transitionSet.setDuration(300);
+        transitionSet.setDuration(900);
 
         return transitionSet;
     }

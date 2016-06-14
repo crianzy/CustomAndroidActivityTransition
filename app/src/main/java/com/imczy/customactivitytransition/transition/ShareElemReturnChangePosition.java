@@ -43,8 +43,6 @@ public class ShareElemReturnChangePosition extends Transition {
                 Path path = new Path();
                 path.moveTo(startX, startY);
 
-                Log.d(TAG, "getPath() called with: " + "startX = [" + startX + "], startY = [" + startY + "], endX = [" + endX + "], endY = [" + endY + "]");
-
                 float controlPointX = (startX + endX) / 3;
                 float controlPointY = (startY + endY) / 2;
 

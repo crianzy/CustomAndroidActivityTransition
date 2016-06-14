@@ -48,13 +48,6 @@ public class ShareElemEnterRevealTransition extends Transition {
         if (null == startValues || null == endValues) {
             return null;
         }
-
-//        Log.d(TAG, "createAnimator() called with: " + "sceneRoot = [" + sceneRoot + "], startValues = [" + startValues + "], endValues = [" + endValues + "]");
-
-//        if (hasAnim) {
-//            return null;
-//        }
-
         final View view = endValues.view;
         int startRadius = (int) startValues.values.get(PROPNAME_RADIUS);
         int endRadius = (int) endValues.values.get(PROPNAME_RADIUS);

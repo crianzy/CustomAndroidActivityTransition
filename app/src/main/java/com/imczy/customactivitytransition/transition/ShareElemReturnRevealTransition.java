@@ -102,12 +102,19 @@ public class ShareElemReturnRevealTransition extends Transition {
 
     // setLeftTopRightBottom 需要反射执行, 该方法能够控制 View 的大小以及位置 在 ChangeBounds 类中有调用
     private void relfectInvoke(View view, int left, int top, int right, int bottom) {
+
         Class clazz = view.getClass();
         try {
             Method m1 = clazz.getMethod("setLeftTopRightBottom", new Class[]{int.class, int.class, int.class, int.class});
             m1.invoke(view, left, top, right, bottom);
         } catch (Exception e) {
             e.printStackTrace();
+
+            // 5.0版本  没有 setLeftTopRightBottom 这个方法  使用一下方法 ,额 其实 5.0 以上也可以用这些方法?
+            view.setLeft(left);
+            view.setRight(right);
+            view.setTop(top);
+            view.setBottom(bottom);
         }
 
     }
