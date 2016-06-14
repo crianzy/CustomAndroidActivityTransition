@@ -13,7 +13,7 @@
 - ChangeTransform 改变普通的 View 一些Scalex 值
 - ChangeScroll 改变滑动位置
 
-以上都是原生的. 但是面对一些复制的转场动画,google 提供的这几个还是不够, 很多时候都需要自己定义转场动画.
+以上都是原生的. 但是面对一些复杂的转场动画,google 提供的这几个还是不够, 很多时候都需要自己定义转场动画.
 例如下转场动画, 使用原生的这些动画很难实现:
 
 ![](image/demo_preview.gif)
@@ -28,7 +28,7 @@
 后面只能自己写一个转场动画,转场动画也简单.
 只需要继承 `Visibility` 或 `Transition` 其中 `Visibility`是继承自`Transition`的
 
-如果转场动画知识某个 View 出现或退出, 那么可以考虑继承 `Visibility`
+如果转场动画只是某个 View 出现或消失, 那么可以考虑继承 `Visibility`
 如果是累 ShareElem这样的转场动画, 那么就需要继承 `Transition`
 
 回到重点, 我们需要实现 , 第一个问题:
@@ -210,10 +210,10 @@ getWindow().setEnterTransition(new CommentEnterTransition(this, mTitleBarTxt, mB
 我们在来分析看看上面的那个转场动画
 1. 揭露效果: 从第一个页面的圆球开始, 圆球慢慢的方法, 直到整个动画结束
 2. 看似 View 是在随着动画的过程慢慢放大
-3. 除了方法似乎 还有曲线位移的动画?
+3. 似乎还有曲线位移的动画?
 
 其实如果真的自己写过转场动画的话, 第二个可以排除了, 分享元素的转场动画一开始 view 就已经变成第二个页面中的View 了, 所以 View 没有放大过程
-ok 我们首先来解决第一个问题, 揭露动画. 这个是 Android 5.0 以后原生提供的一个动画使用其他特别简单:
+ok 我们首先来解决第一个问题, 揭露动画. 这个是 Android 5.0 以后原生提供的一个动画使用起来特别简单:
 ```
 ViewAnimationUtils.createCircularReveal(view, centerX, centerY,startRadius, endRadius);
 ```
@@ -223,7 +223,7 @@ ViewAnimationUtils.createCircularReveal(view, centerX, centerY,startRadius, endR
 `startRadius`, `endRadius`则是开始时圆球的半径 和结束时圆球的半径
 
 那么加来我们就需要 继承 `Transition` 来实现揭露动画了.
-继承 `Transition` 需要重写 一下 3个方法:
+继承 `Transition` 需要重写以下 3个方法:
 1. `public void captureStartValues(TransitionValues transitionValues)` 这里能够获取到 上一个页面的对应的 View 一些属性值
 2. `public void captureEndValues(TransitionValues transitionValues)` 这里能够获取到 即将要打开的对应的页面的对应 View 的一些属性值
 3. `public Animator createAnimator(ViewGroup sceneRoot, TransitionValues startValues, TransitionValues endValues)` 这里创建对应的转场动画
@@ -300,7 +300,7 @@ public class ShareElemEnterRevealTransition extends Transition {
 貌似差距有点大,没有颜色的渐变, 同时貌似接通动画的圆形是在第二页面 View 的圆心, 没有移动的感觉
 ok , 接下来需要处理的有: 
 1. 移动 View
-2. 北京颜色渐变
+2. 背景颜色渐变
 
 通过上面的代码示例, 做这两件事情应该不复杂, 下面直接上代码:
 
@@ -477,9 +477,9 @@ public class ChangePosition extends Transition {
 
 ```
 
-上面改变位置的 使用 Path 动画, 使得 View 能够以贝塞尔曲线的方式进行
+上面改变位置的 使用 Path 动画, 使得 View 能够以贝塞尔曲线的方式进行位移
 
-ok 上面基本上酒吧 enter 的动画处理完了, 但是返回还是有点问题.
+ok 上面基本上就把 enter 的动画处理完了, 但是返回还是有点问题.
 看下图:
 ![](image/back_error.gif)
 
@@ -497,7 +497,7 @@ public void setLeftTopRightBottom(int left, int top, int right, int bottom) {
 }
 ```
 
-后面发现有适配问题, 这个发放只在5.1以上 上面有, 在5.0 上面没有, 然后又看了下 5.0 的ChangeBounds 源码, 发现在 5.0 上改变 View 大小使用 是通过以下方式实现的:
+后面发现有适配问题, 这个方法只在5.1或以上才有, 在5.0 上面没有, 然后又看了下 5.0 的ChangeBounds 源码, 发现在 5.0 上改变 View 大小是通过以下方式实现的:
 ```
 view.setLeft(left);
 view.setRight(right);
@@ -505,10 +505,10 @@ view.setTop(top);
 view.setBottom(bottom);
 ```
 
-额 其实 5.0 的这个 set 方法在 5.0 以上也是可以使用的. 
+额 其实 5.0 的这个 set 方法在 5.1或以上也是可以使用的. 
 所以改变 View 大小这个, 可以选择 5.1 以上用反射 调用 setLeftTopRightBottom 方法, 也可以选择 都直接使用set 方法
 
-下面上返回动画一些代码:
+下面贴上返回动画一些代码:
 改变位置:
 ```
 public class ShareElemReturnChangePosition extends Transition {
@@ -728,7 +728,7 @@ public class ShareElemReturnRevealTransition extends Transition {
 
 ```
 
-ok 下面上一下 Activity 中如何使用这些动画:
+ok 下面贴上 Activity 中如何使用这些动画:
 
 ```
 public class CommentActivity extends AppCompatActivity {
@@ -820,9 +820,9 @@ public class CommentActivity extends AppCompatActivity {
 
 
 ##结语
-ok 关于 自定义 过程动画基本就说完了
-这里没有将具体如果使用过场动画, 也米有说 EnterTransition 和 ReturnTransition 这些 关系什么,
-还有如何最基本使用过场动画什么的, 这些Android 官网上都有中文文档
+ok 关于自定义过场动画基本就说完了
+这里没有将具体如果使用过场动画, 也没有有说 EnterTransition 和 ReturnTransition 这些关系什么的,
+还有如何最基本使用过场动画什么的, 这些Android 官网上都有中文文档, 就不多提了
 
 ### [github 项目连接](https://github.com/crianzy/CustomAndroidActivityTransition)
 
